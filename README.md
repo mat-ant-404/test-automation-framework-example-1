@@ -12,4 +12,4 @@ API test automation framework
 ## How to
 - generate models from swagger
   - download swagger and position it in input folder
-  - - execute
+  - from project root execute "datamodel-codegen --input .\input\petstore.json --output .\models\generated\petstore.py --output-model-type pydantic.BaseModel"
