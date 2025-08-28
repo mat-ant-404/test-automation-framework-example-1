@@ -1,7 +1,7 @@
 pytest==8.4.1
 requests==2.32.5
 pydantic==2.11.7
-datamodel-code-generator==0.33.0
 python-dotenv==1.1.1
 pyyaml==6.0.2
 pytz==2025.2
+pytest-html==4.1.1

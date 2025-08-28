@@ -3,12 +3,13 @@ import json
 
 import pytz
 import requests
-from typing import Optional, Dict, Any
-import time
+from typing import Optional, Dict
+
+from requests import Response
 
 
 class ApiClient:
-    def __init__(self, base_url: str, api_key: Optional[str] = None, timeout: int = 30):
+    def __init__(self, base_url: str, api_key: Optional[str] = None, timeout: int = 1):
         self.base_url = base_url.rstrip('/')
         self.api_key = api_key
         self.timeout = timeout
@@ -44,24 +45,23 @@ class ApiClient:
             parsed = json.loads(response_content)
             response_content = json.dumps(parsed, indent=4)
         print(f"{datetime.datetime.now(tz=pytz.utc)} Response content: {response_content}")
-        response.raise_for_status()
         return response
 
 
-    def get(self, endpoint: str, params: Optional[Dict] = None) -> Dict[str, Any]:
+    def get(self, endpoint: str, params: Optional[Dict] = None) -> Response:
         """GET request"""
         response = self._request('GET', endpoint, params=params)
-        return response.json()
+        return response
 
-    def post(self, endpoint: str, data: Optional[Dict] = None) -> Dict[str, Any]:
+    def post(self, endpoint: str, request_data: Optional[Dict] = None) -> Response:
         """POST request"""
-        response = self._request('POST', endpoint, json=data)
-        return response.json()
+        response = self._request('POST', endpoint, json=request_data)
+        return response
 
-    def put(self, endpoint: str, data: Optional[Dict] = None) -> Dict[str, Any]:
+    def put(self, endpoint: str, request_data: Optional[Dict] = None) -> Response:
         """PUT request"""
-        response = self._request('PUT', endpoint, json=data)
-        return response.json()
+        response = self._request('PUT', endpoint, json=request_data)
+        return response
 
     def delete(self, endpoint: str) -> bool:
         """DELETE request"""
