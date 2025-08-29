@@ -182,7 +182,7 @@ def test_post_add_new_pet_405_photourls_null():
     assert response[1].type == CLIENT_ERROR
     assert response[1].message == INVALID_INPUT
 
-def test_post_add_new_pet_200_photurls_single():
+def test_post_add_new_pet_200_photourls_single():
 
     response = PetstoreApi.post_create_new_pet(
         request_data=PetstoreRequestModelPet(id=TEST_ID, category=PetstoreRequestModelCategory(id=TEST_CAT_ID, name=None),
@@ -201,7 +201,7 @@ def test_post_add_new_pet_200_photurls_single():
     assert response[1].tags[0].name == TEST_TAG_NAME
     assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
 
-def test_post_add_new_pet_200_photurls_double():
+def test_post_add_new_pet_200_photourls_double():
 
     response = PetstoreApi.post_create_new_pet(
         request_data=PetstoreRequestModelPet(id=TEST_ID, category=PetstoreRequestModelCategory(id=TEST_CAT_ID, name=None),

@@ -1,8 +1,6 @@
-import datetime
 import json
 from json import JSONDecodeError
 
-import pytz
 import requests
 from typing import Optional, Dict
 

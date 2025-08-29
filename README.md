@@ -13,4 +13,4 @@ API test automation framework
 - tests can be run by using run/debug option in Pycharm in debug purposes
 - tests are correctly run by executing command "pytest" from project root
 - only smoke tests can be executed with "pytest -m smoke" from project root
-- html report and log file will be created as a pair with same name (except extenstion) when tests are executed, they get saved in output folder
+- html report and log file will be created as a pair with same name (except extension) when tests are executed, they get saved in output folder
