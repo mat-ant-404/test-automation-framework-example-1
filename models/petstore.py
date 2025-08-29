@@ -1,25 +1,29 @@
 from enum import Enum
-from typing import List
+from typing import List, Union
 
 from pydantic import BaseModel
 
 class PetstoreRequestModelPet(BaseModel):
-    id: int = None
-    category: 'PetstoreRequestModelCategory' = None
-    name: str = None
-    photoUrls: List[str] = None
-    tags: List[str] = None
-    status: 'PetstoreRequestEnumStatus' = None
+    id: Union[str, int, None] = None
+    category: Union['PetstoreRequestModelCategory', None, str, int] = None
+    name: Union[str, int, None] = None
+    photoUrls: Union[List[str], None] = None
+    tags: Union[List['PetstoreRequestModelTag'], None, str] = None
+    status: Union[str, int, None] = None
 
 class PetstoreRequestModelCategory(BaseModel):
-    id: int
-    name: str
+    id: Union[str, int, None] = None
+    name: Union[str, int, None] = None
+
+class PetstoreRequestModelTag(BaseModel):
+    id: Union[str, int, None] = None
+    name: Union[str, int, None] = None
 
 class PetstoreRequestEnumStatus(Enum):
     AVAILABLE = 'available'
     PENDING = 'pending'
     SOLD = 'sold'
-    STRING = 'string'
+    UNKNOWN_STRING = 'unknown_string'
 
 class PetstoreResponseErrorModel(BaseModel):
     code: int

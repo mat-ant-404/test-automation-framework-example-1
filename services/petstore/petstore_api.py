@@ -13,7 +13,6 @@ class PetstoreApi:
         self.add_new_pet_path = "/v2/pet"
         self.get_pet_by_id_path = "/v2/pet"
         self.success_status_codes = [200, 201, 204]
-        self.client_error_status_codes = [400, 401, 402, 403, 404, 405]
 
 
     def post_create_new_pet(self, request_data: PetstoreRequestModelPet):
@@ -23,7 +22,7 @@ class PetstoreApi:
         response_body = response.json()
         if response_http_code in self.success_status_codes:
             response_body = PetstoreRequestModelPet(**response_body)
-        elif response_http_code in self.client_error_status_codes:
+        else:
             response_body = PetstoreResponseErrorModel(**response_body)
         return response_http_code, response_body
 
@@ -33,7 +32,7 @@ class PetstoreApi:
         response_body = response.json()
         if response_http_code in self.success_status_codes:
             response_body = PetstoreRequestModelPet(**response_body)
-        elif response_http_code in self.client_error_status_codes:
+        else:
             response_body = PetstoreResponseErrorModel(**response_body)
         return response_http_code, response_body
 
@@ -44,7 +43,7 @@ class PetstoreApi:
         response_body = response.json()
         if response_http_code in self.success_status_codes:
             response_body = PetstoreRequestModelPet(**response_body)
-        elif response_http_code in self.client_error_status_codes:
+        else:
             response_body = PetstoreResponseErrorModel(**response_body)
         return response_http_code, response_body
 
