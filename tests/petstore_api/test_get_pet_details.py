@@ -30,6 +30,7 @@ def test_get_pet_details_200_valid():
     assert response[1].status in [PetstoreRequestEnumStatus.PENDING.value, PetstoreRequestEnumStatus.AVAILABLE.value,
                                   PetstoreRequestEnumStatus.SOLD.value]
 
+
 def test_get_pet_details_404_non_existing_pet():
     response = PetstoreApi.get_pet_by_id(pet_id=0)
 
@@ -37,6 +38,3 @@ def test_get_pet_details_404_non_existing_pet():
     assert response[1].code == 1
     assert response[1].type == TYPE_ERROR
     assert response[1].message == NOT_FOUND_MESSAGE
-
-
-

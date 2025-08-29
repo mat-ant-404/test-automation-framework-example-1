@@ -14,7 +14,6 @@ class PetstoreApi:
         self.get_pet_by_id_path = "/v2/pet"
         self.success_status_codes = [200, 201, 204]
 
-
     def post_create_new_pet(self, request_data: PetstoreRequestModelPet):
         request_data = request_data.model_dump()
         response = self.api_client.post(endpoint=self.add_new_pet_path, request_data=request_data)

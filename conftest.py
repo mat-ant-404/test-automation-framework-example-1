@@ -6,6 +6,7 @@ from pathlib import Path
 TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 OUTPUT_DIR = "output"
 
+
 # Configure the logger at module level
 def setup_logger():
     """Setup simple logger for pytest session"""
@@ -30,6 +31,7 @@ def setup_logger():
 
     return logging.getLogger(__name__)
 
+
 # Configure HTML report automatically
 def pytest_configure(config):
     config.addinivalue_line(
@@ -43,6 +45,7 @@ def pytest_configure(config):
     report_path = report_dir / f"pytest_{TIMESTAMP}.html"
     config.option.htmlpath = str(report_path)
     config.option.self_contained_html = True
+
 
 # Initialize logger at session start
 @pytest.fixture(scope="session", autouse=True)
