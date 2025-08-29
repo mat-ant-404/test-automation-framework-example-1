@@ -8,11 +8,13 @@ class PetstoreApi:
         self.base_url = PETSTORE_APP_SETTINGS["BASE_URL"]
         self.api_client = ApiClient(
             base_url=self.base_url,
+            api_key=PETSTORE_APP_SETTINGS["API_KEY"]
         )
         self.add_new_pet_path = "/v2/pet"
         self.get_pet_by_id_path = "/v2/pet"
         self.success_status_codes = [200, 201, 204]
         self.client_error_status_codes = [400, 401, 402, 403, 404, 405]
+
 
     def post_create_new_pet(self, request_data: PetstoreRequestModelPet):
         request_data = request_data.model_dump()

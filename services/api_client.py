@@ -1,11 +1,13 @@
 import datetime
 import json
+from json import JSONDecodeError
 
 import pytz
 import requests
 from typing import Optional, Dict
 
 from requests import Response
+from conftest import get_logger
 
 
 class ApiClient:
@@ -17,34 +19,48 @@ class ApiClient:
 
         # Set default headers
         if api_key:
-            self.session.headers.update({'Authorization': f'Bearer {api_key}'})
+            self.session.headers.update({'api_key': f'{api_key}'})
         self.session.headers.update({'Content-Type': 'application/json'})
 
     def _request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
         """Make HTTP request with retry logic"""
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
 
-        separator = "===================================================================="
-
-        print(f"\n{separator}")
-        print(f"LOG:")
-        print(f"{datetime.datetime.now(tz=pytz.utc)} Sending {method} request to endpoint: {url}")
+        logger = get_logger()
+        logger.info("=" * 50)
+        logger.info("REQUEST BEGIN")
+        logger.info("=" * 50)
+        logger.info(f"Sending {method} request to endpoint: {url}")
         request_body = kwargs.get('json') if kwargs.get('json') else None
+        request_headers = json.dumps(dict(self.session.headers), indent=4)
+        logger.info(f"Request headers {request_headers}")
         if request_body:
             request_body = json.dumps(request_body, indent=4)
-        print(f"{datetime.datetime.now(tz=pytz.utc)} Request data: {request_body}")
+        logger.info(f"Request data: {request_body}")
         response = self.session.request(
             method=method,
             url=url,
             timeout=self.timeout,
             **kwargs
         )
-        print(f"{datetime.datetime.now(tz=pytz.utc)} Response code: {response.status_code}")
+        logger.info("=" * 50)
+        logger.info("REQUEST END")
+        logger.info("=" * 50)
+        logger.info("=" * 50)
+        logger.info("RESPONSE START")
+        logger.info("=" * 50)
+        logger.info(f"Response code: {response.status_code}")
         response_content = response.content if response.content else None
         if response_content:
-            parsed = json.loads(response_content)
-            response_content = json.dumps(parsed, indent=4)
-        print(f"{datetime.datetime.now(tz=pytz.utc)} Response content: {response_content}")
+            try:
+                parsed = json.loads(response_content)
+                response_content = json.dumps(parsed, indent=4)
+            except JSONDecodeError:
+                pass
+        logger.info(f"Response content: {response_content}")
+        logger.info("=" * 50)
+        logger.info("RESPONSE END")
+        logger.info("=" * 50)
         return response
 
 
