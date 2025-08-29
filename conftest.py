@@ -40,7 +40,7 @@ def pytest_configure(config):
     report_dir.mkdir(exist_ok=True)
 
     # Set HTML report path with timestamp
-    report_path = report_dir / f"pytest_report_{TIMESTAMP}.html"
+    report_path = report_dir / f"pytest_{TIMESTAMP}.html"
     config.option.htmlpath = str(report_path)
     config.option.self_contained_html = True
 
