@@ -7,6 +7,7 @@ API test automation framework
 - from project root execute -> "python -m venv taf" (creating virtualenv named taf1)
 - from project root execute -> ".\taf1\Scripts\activate" (activate virtualenv named taf1)
 - in Pycharm - File - Settings - Python - Interpreter -> add existing interpreter (python executable from virtualenv taf1)
+- from project root execute -> "pip install -r requirements.txt"
 
 ## Using tests -> How to (run)
 - PETSTORE_API_KEY needs to be added to environment variables
