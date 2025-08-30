@@ -14,7 +14,9 @@ API test automation framework
 
 ## Executing tests and checking results
 
-- PETSTORE_API_KEY needs to be added to environment variables
+- TAF_PETSTORE_API_KEY must be added to environment variables, otherwise api_key won't be sent in request headers
+- TAF_TESTER_FULLNAME must be added to environment variables, otherwise "Tester" will be "Not provided" in html report
+- TAF_TEST_ENVIRONMENT must be added to environment variables, otherwise "Environment name" will be "Not provided" in html report
 - tests can be run by using run/debug option in Pycharm in debug purposes
 - tests are correctly run by executing command "pytest" from project root
 - only smoke tests can be executed with "pytest -m smoke" from project root

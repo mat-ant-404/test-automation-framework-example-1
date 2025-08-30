@@ -3,6 +3,8 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
+from config.settings import TEST_METADATA
+
 TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 OUTPUT_DIR = "output"
 
@@ -45,6 +47,11 @@ def pytest_configure(config):
     report_path = report_dir / f"pytest_{TIMESTAMP}.html"
     config.option.htmlpath = str(report_path)
     config.option.self_contained_html = True
+
+def pytest_metadata(metadata):
+   metadata.pop("JAVA_HOME", None)
+   metadata.update({"Tester": TEST_METADATA["TESTER_FULLNAME"] if TEST_METADATA["TESTER_FULLNAME"] else "Not provided"})
+   metadata.update({"Environment name": TEST_METADATA["TEST_ENV"] if TEST_METADATA["TEST_ENV"] else "Not provided"})
 
 
 # Initialize logger at session start
