@@ -12,7 +12,7 @@ API test automation framework
   taf1)
 - from project root execute -> "pip install -r requirements.txt"
 
-## Using tests -> How to (run)
+## Executing tests and checking results
 
 - PETSTORE_API_KEY needs to be added to environment variables
 - tests can be run by using run/debug option in Pycharm in debug purposes
