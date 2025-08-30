@@ -19,22 +19,22 @@ TYPE_ERROR = "error"
 def test_get_pet_details_200_valid():
     response = PetstoreApi.get_pet_by_id(pet_id=23)
 
-    assert response[0] == 200
-    assert response[1].id == 23
-    assert response[1].category.id == 0
-    assert response[1].category.name == "dog"
-    assert response[1].name == "Max Whiskers"
-    assert response[1].photoUrls == ["string"]
-    assert response[1].tags[0].id == 0
-    assert response[1].tags[0].name == "puppy"
-    assert response[1].status in [PetstoreRequestEnumStatus.PENDING.value, PetstoreRequestEnumStatus.AVAILABLE.value,
+    assert response.code == 200
+    assert response.body.id == 23
+    assert response.body.category.id == 0
+    assert response.body.category.name == "dog"
+    assert response.body.name == "Max Whiskers"
+    assert response.body.photoUrls == ["string"]
+    assert response.body.tags[0].id == 0
+    assert response.body.tags[0].name == "puppy"
+    assert response.body.status in [PetstoreRequestEnumStatus.PENDING.value, PetstoreRequestEnumStatus.AVAILABLE.value,
                                   PetstoreRequestEnumStatus.SOLD.value]
 
 
 def test_get_pet_details_404_non_existing_pet():
     response = PetstoreApi.get_pet_by_id(pet_id=0)
 
-    assert response[0] == 404
-    assert response[1].code == 1
-    assert response[1].type == TYPE_ERROR
-    assert response[1].message == NOT_FOUND_MESSAGE
+    assert response.code == 404
+    assert response.body.code == 1
+    assert response.body.type == TYPE_ERROR
+    assert response.body.message == NOT_FOUND_MESSAGE

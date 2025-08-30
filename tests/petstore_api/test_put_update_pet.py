@@ -24,16 +24,16 @@ def test_put_update_existing_pet_200_valid_data():
                                              name=TEST_NAME, photoUrls=[],
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == TEST_CAT_ID
-    assert response[1].category.name == TEST_CAT_NAME
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == TEST_CAT_ID
+    assert response.body.category.name == TEST_CAT_NAME
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_405_id_string():
@@ -43,10 +43,10 @@ def test_put_update_existing_pet_405_id_string():
                                              name=TEST_NAME, photoUrls=[],
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_200_id_null():
@@ -56,16 +56,16 @@ def test_put_update_existing_pet_200_id_null():
                                              name=TEST_NAME, photoUrls=[],
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
-    assert response[0] == 200
-    assert response[1].id > 0
-    assert response[1].category.id == TEST_CAT_ID
-    assert response[1].category.name == TEST_CAT_NAME
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id > 0
+    assert response.body.category.id == TEST_CAT_ID
+    assert response.body.category.name == TEST_CAT_NAME
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_200_category_null():
@@ -74,15 +74,15 @@ def test_put_update_existing_pet_200_category_null():
                                              name=TEST_NAME, photoUrls=[],
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
-    assert response[0] == 200
-    assert response[1].id > 0
-    assert response[1].category is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id > 0
+    assert response.body.category is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_405_category_string():
@@ -91,10 +91,10 @@ def test_put_update_existing_pet_405_category_string():
                                              name=TEST_NAME, photoUrls=[],
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_405_category_int():
@@ -103,10 +103,10 @@ def test_put_update_existing_pet_405_category_int():
                                              name=TEST_NAME, photoUrls=[],
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_200_category_id_null():
@@ -117,16 +117,16 @@ def test_put_update_existing_pet_200_category_id_null():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 0
-    assert response[1].category.name == TEST_CAT_NAME
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 0
+    assert response.body.category.name == TEST_CAT_NAME
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_405_category_id_string():
@@ -137,10 +137,10 @@ def test_put_update_existing_pet_405_category_id_string():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_200_category_name_null():
@@ -151,16 +151,16 @@ def test_put_update_existing_pet_200_category_name_null():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_405_name_null():
@@ -171,10 +171,10 @@ def test_put_update_existing_pet_405_name_null():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_405_photourls_null():
@@ -185,10 +185,10 @@ def test_put_update_existing_pet_405_photourls_null():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_200_photourls_single():
@@ -199,16 +199,16 @@ def test_put_update_existing_pet_200_photourls_single():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == ["https://aa.a.com"]
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == ["https://aa.a.com"]
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_200_photourls_double():
@@ -219,16 +219,16 @@ def test_put_update_existing_pet_200_photourls_double():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == ["https://aa.a.com", "https://bb.b.com"]
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == ["https://aa.a.com", "https://bb.b.com"]
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_200_tags_null():
@@ -239,14 +239,14 @@ def test_put_update_existing_pet_200_tags_null():
                                              tags=None,
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert response[1].tags is None
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert response.body.tags is None
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_200_tags_single_double():
@@ -258,18 +258,18 @@ def test_put_update_existing_pet_200_tags_single_double():
                                                    PetstoreRequestModelTag(id=TEST_TAG_ID_2, name=TEST_TAG_NAME_2)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 2
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].tags[1].id == TEST_TAG_ID_2
-    assert response[1].tags[1].name == TEST_TAG_NAME_2
-    assert response[1].status == PetstoreRequestEnumStatus.PENDING.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 2
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.tags[1].id == TEST_TAG_ID_2
+    assert response.body.tags[1].name == TEST_TAG_NAME_2
+    assert response.body.status == PetstoreRequestEnumStatus.PENDING.value
 
 
 def test_put_update_existing_pet_405_tags_invalid_data():
@@ -281,10 +281,10 @@ def test_put_update_existing_pet_405_tags_invalid_data():
                                                    PetstoreRequestModelTag(id=TEST_TAG_ID_2, name=None)],
                                              status=PetstoreRequestEnumStatus.PENDING.value))
 
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT
 
 
 def test_put_update_existing_pet_200_tags_status_available():
@@ -295,16 +295,16 @@ def test_put_update_existing_pet_200_tags_status_available():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.AVAILABLE.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.AVAILABLE.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.AVAILABLE.value
 
 
 def test_put_update_existing_pet_200_tags_status_sold():
@@ -315,16 +315,16 @@ def test_put_update_existing_pet_200_tags_status_sold():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.SOLD.value))
 
-    assert response[0] == 200
-    assert response[1].id == TEST_ID
-    assert response[1].category.id == 1
-    assert response[1].category.name is None
-    assert response[1].name == TEST_NAME
-    assert response[1].photoUrls == []
-    assert len(response[1].tags) == 1
-    assert response[1].tags[0].id == TEST_TAG_ID
-    assert response[1].tags[0].name == TEST_TAG_NAME
-    assert response[1].status == PetstoreRequestEnumStatus.SOLD.value
+    assert response.code == 200
+    assert response.body.id == TEST_ID
+    assert response.body.category.id == 1
+    assert response.body.category.name is None
+    assert response.body.name == TEST_NAME
+    assert response.body.photoUrls == []
+    assert len(response.body.tags) == 1
+    assert response.body.tags[0].id == TEST_TAG_ID
+    assert response.body.tags[0].name == TEST_TAG_NAME
+    assert response.body.status == PetstoreRequestEnumStatus.SOLD.value
 
 
 def test_put_update_existing_pet_405_tags_status_unknown():
@@ -335,7 +335,7 @@ def test_put_update_existing_pet_405_tags_status_unknown():
                                              tags=[PetstoreRequestModelTag(id=TEST_TAG_ID, name=TEST_TAG_NAME)],
                                              status=PetstoreRequestEnumStatus.UNKNOWN_STRING.value))
 
-    assert response[0] == 405
-    assert response[1].code == 405
-    assert response[1].type == CLIENT_ERROR
-    assert response[1].message == INVALID_INPUT
+    assert response.code == 405
+    assert response.body.code == 405
+    assert response.body.type == CLIENT_ERROR
+    assert response.body.message == INVALID_INPUT

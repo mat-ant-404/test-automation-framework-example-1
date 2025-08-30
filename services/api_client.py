@@ -1,10 +1,11 @@
 import json
+from dataclasses import dataclass
 from json import JSONDecodeError
 
 import requests
 from typing import Optional, Dict
 
-from requests import Response
+from pydantic import BaseModel
 from conftest import get_logger
 
 
@@ -14,17 +15,24 @@ class ApiClient:
         self.api_key = api_key
         self.timeout = timeout
         self.session = requests.Session()
+        self.success_status_codes = [200, 201, 204]
 
         # Set default headers
         if api_key:
             self.session.headers.update({'api_key': f'{api_key}'})
         self.session.headers.update({'Content-Type': 'application/json'})
 
-    def _request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
+    def _request(
+            self,
+            method: str,
+            endpoint: str,
+            **kwargs
+    ) -> requests.Response:
         """Make HTTP request with retry logic"""
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
 
         logger = get_logger()
+
         logger.info("=" * 50)
         logger.info("REQUEST BEGIN")
         logger.info("=" * 50)
@@ -35,12 +43,14 @@ class ApiClient:
         if request_body:
             request_body = json.dumps(request_body, indent=4)
         logger.info(f"Request data: {request_body}")
+
         response = self.session.request(
             method=method,
             url=url,
             timeout=self.timeout,
             **kwargs
         )
+
         logger.info("=" * 50)
         logger.info("REQUEST END")
         logger.info("=" * 50)
@@ -59,25 +69,80 @@ class ApiClient:
         logger.info("=" * 50)
         logger.info("RESPONSE END")
         logger.info("=" * 50)
+
         return response
 
+    def _process_response(
+            self,
+            response: requests.Response,
+            response_model,
+            response_error_model
+    ) -> 'ResponseModel':
+        response_http_code = response.status_code
+        response_body = response.json()
+        if response_http_code in self.success_status_codes:
+            response_body = response_model(**response_body)
+        else:
+            response_body = response_error_model(**response_body)
+        return ResponseModel(code=response_http_code, body=response_body)
 
-    def get(self, endpoint: str, params: Optional[Dict] = None) -> Response:
+    def get(
+            self,
+            endpoint: str,
+            response_model: Optional[type[BaseModel]],
+            response_error_model: Optional[type[BaseModel]],
+            params: Optional[Dict] = None,
+    ) -> 'ResponseModel':
         """GET request"""
-        response = self._request('GET', endpoint, params=params)
-        return response
+        raw_response = self._request(
+            method='GET',
+            endpoint=endpoint,
+            params=params)
+        parsed_response = self._process_response(
+            response=raw_response,
+            response_model=response_model,
+            response_error_model=response_error_model)
+        return parsed_response
 
-    def post(self, endpoint: str, request_data: Optional[Dict] = None) -> Response:
+    def post(
+            self,
+            endpoint: str,
+            response_model: Optional[type[BaseModel]],
+            response_error_model: Optional[type[BaseModel]],
+            request_data: Optional[BaseModel] = None
+    ) -> 'ResponseModel':
         """POST request"""
-        response = self._request('POST', endpoint, json=request_data)
-        return response
+        request_data = request_data.model_dump()
+        raw_response = self._request(
+            method='POST',
+            endpoint=endpoint,
+            json=request_data)
+        parsed_response = self._process_response(
+            response=raw_response,
+            response_model=response_model,
+            response_error_model=response_error_model)
+        return parsed_response
 
-    def put(self, endpoint: str, request_data: Optional[Dict] = None) -> Response:
+    def put(self,
+            endpoint: str,
+            response_model: Optional[type[BaseModel]],
+            response_error_model: Optional[type[BaseModel]],
+            request_data: Optional[BaseModel] = None
+            ) -> 'ResponseModel':
         """PUT request"""
-        response = self._request('PUT', endpoint, json=request_data)
-        return response
+        request_data = request_data.model_dump()
+        raw_response = self._request(
+            method='PUT',
+            endpoint=endpoint,
+            json=request_data)
+        parsed_response = self._process_response(
+            response=raw_response,
+            response_model=response_model,
+            response_error_model=response_error_model)
+        return parsed_response
 
-    def delete(self, endpoint: str) -> bool:
-        """DELETE request"""
-        response = self._request('DELETE', endpoint)
-        return response.status_code == 204
+
+@dataclass
+class ResponseModel:
+    code: int
+    body: BaseModel
